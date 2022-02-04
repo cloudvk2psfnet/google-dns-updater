@@ -67,9 +67,13 @@ def main(request):
         if host == record.name:
             for data in record.rrdatas:
                 if test_for_record_change(data, ip):
+                    logging.info("after test.")
                     add_to_change_set(record, 'delete')
+                    logging.info("after delete.")
                     add_to_change_set(create_record_set(host, record.record_type, ip), 'create')
+                    logging.info("after add.")
                     execute_change_set(changes)
+                    logging.info("after execute.")
                     return "Change successful."
                 else:
                     return "Record up to date."
